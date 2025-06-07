@@ -10,6 +10,15 @@ A proposta se concretiza por meio de um sistema completo, que envolve o processa
 
 ---
 
+## 📅 Dados Utilizados
+
+* Dados climáticos do INMET (históricos regionais);
+* Registros de desastres naturais do site disasterscharter.org;
+* Estrutura padronizada com 20+ colunas meteorológicas;
+* Base consolidada: `Base_Unificada_INMET.xlsx`.
+
+---
+
 ## 📟 Etapas e Lógica da Solução
 
 * 📅 **Aquisição de Dados**: Coleta de séries temporais do INMET, correlacionadas com registros históricos de desastres documentados visualmente (Imagem 1).
@@ -51,9 +60,7 @@ A escolha dos tipos (`VARCHAR2`, `FLOAT`, `DATE`) garante compatibilidade e dese
 
 #### 📄 `InserçãoDados.sql`
 
-Script auxiliar que realiza a **inserção automatizada dos registros** processados. Pode ser gerado via notebook ou scripts adicionais. Sua função é garantir que os dados estejam prontos para consulta e uso em análises e visualizações na aplicação.
-
-Esses dois arquivos representam a base de persistência e disponibilização dos dados, integrando a camada de dados ao restante da aplicação.
+Script auxiliar que realiza a **inserção automatizada dos registros** processados. Pode ser gerado via notebook ou scripts adicionais. Foi utilizado para simular a inserção de dados via ESP32, que estaria em um local estratégico para a captura dos daodos.
 
 ---
 
@@ -102,24 +109,6 @@ O modelo Random Forest demonstrou desempenho consistente ao ser testado com regi
 * Interface de previsão robusta e personalizável.
 
 A escolha do Random Forest foi motivada pela sua robustez a outliers, baixo risco de overfitting e excelente desempenho com dados tabulares heterogêneos.
-
----
-
-## 📅 Dados Utilizados
-
-* Dados climáticos do INMET (históricos regionais);
-* Registros de desastres naturais do site disasterscharter.org;
-* Estrutura padronizada com 20+ colunas meteorológicas;
-* Base consolidada: `Base_Unificada_INMET.xlsx`.
-
----
-
-## 🔗 Requisitos Atendidos
-
-* ✅ Modelo de machine learning implementado e funcional;
-* ✅ Base relacional em Oracle estruturada e populada com SQL;
-* ✅ Aplicação web com múltiplas visualizações em Streamlit;
-* ✅ Scripts e modularização completos para reuso e expansão futura.
 
 ---
 
