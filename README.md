@@ -110,7 +110,52 @@ A escolha do Random Forest foi motivada pela sua robustez a outliers, baixo risc
 
 ---
 
+## 🔌 Integração com ESP32 e Simulação no Wokwi
+
+Como prova de conceito para futuras implementações físicas do sistema, foi desenvolvido um protótipo funcional na plataforma **[Wokwi](https://wokwi.com/projects/433061603613628417)**, que simula o uso de sensores ambientais conectados ao **ESP32 DevKit V4**.
+
+### ⚙️ Componentes Utilizados
+
+A simulação contempla os seguintes dispositivos eletrônicos:
+
+- 🧠 **ESP32 DevKit V4** – Microcontrolador responsável pela aquisição e transmissão dos dados;
+- 🌡️ **Sensor DHT22** – Mede temperatura e umidade relativa do ar;
+- 🔆 **Potenciômetro** – Simula a intensidade de radiação solar para calibração dos valores analógicos;
+- 🔌 **Protoboard virtual** – Para facilitar as conexões dos componentes;
+- 🔋 Fontes de alimentação e conexões com GND e 5V devidamente configuradas.
+
+### 🧾 Bibliotecas Utilizadas
+
+As seguintes bibliotecas foram integradas no ambiente de simulação Wokwi:
+
+- `DHT sensor library for ESPx`
+- `DHT sensor library`
+
+Essas bibliotecas garantem a correta leitura dos dados de temperatura e umidade do sensor DHT22.
+
+### 📑 Funcionalidades do Código
+
+O código desenvolvido na IDE do Wokwi (`sketch.ino`) realiza:
+
+1. **Inicialização da comunicação serial e dos sensores**;
+2. **Leitura periódica** dos valores de temperatura, umidade e radiação simulada (potenciômetro);
+3. **Registro contínuo** dos dados no monitor serial para visualização em tempo real;
+4. **Cálculo do ponto de orvalho**, com identificação dos valores máximos e mínimos.
+
+### 🖼️ Diagrama de Ligações
+
+A arquitetura física simulada foi documentada no arquivo `diagram.json`, contendo:
+
+- Conexões entre pinos digitais/analógicos do ESP32 com os sensores;
+- Alimentação correta dos componentes;
+- Fiação representativa das ligações em protoboard.
+
+Esse diagrama foi produzido diretamente pela interface do Wokwi, garantindo a fidelidade do circuito para futura replicação física.
+
+---
+
 ## 📹 Demonstração
 
 > Link do vídeo: \[[https://youtube.com/SEU\_LINK\_AQUI](https://youtube.com/SEU_LINK_AQUI)]
-> Frase obrigatória: **"QUERO CONCORRER"**
+
+---
