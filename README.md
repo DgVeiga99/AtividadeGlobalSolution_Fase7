@@ -156,6 +156,6 @@ Esse diagrama foi produzido diretamente pela interface do Wokwi, garantindo a fi
 
 ## 📹 Demonstração
 
-> Link do vídeo: \[[https://youtube.com/SEU\_LINK\_AQUI]((https://youtu.be/8uJGfc0_yOU))]
+> Link do vídeo: https://youtu.be/8uJGfc0_yOU
 
 ---
