@@ -1,134 +1,129 @@
 # Atividade Global Solution - Fase 7
 
-## 🎯 Tema
+##  🎯 Tema
 
-Nos últimos anos, o Brasil tem enfrentado um aumento significativo na frequência e intensidade de eventos climáticos extremos, como tempestades, enchentes e deslizamentos de terra. Regiões como o Sudeste, Sul e Nordeste vêm sofrendo com tragédias como as enchentes em Petrópolis (RJ), os alagamentos em Recife (PE), os deslizamentos em São Sebastião (SP) e os eventos climáticos severos no Vale do Itajaí (SC). Esses desastres causaram centenas de mortes, prejuízos econômicos bilionários e milhares de desabrigados.
+Com a intensificação das mudanças climáticas, o Brasil tem testemunhado um crescimento acentuado na frequência e severidade de eventos meteorológicos extremos, como tempestades, enchentes e deslizamentos. Tragédias em cidades como Petrópolis (RJ), Recife (PE), São Sebastião (SP) e em diversas regiões do Vale do Itajaí (SC) evidenciam o impacto direto desses fenômenos: centenas de mortos, milhões em prejuízos e milhares de pessoas desabrigadas.
 
-Diante dessa realidade, este projeto tem como objetivo principal **desenvolver um modelo de machine learning capaz de prever a ocorrência de tempestades no Brasil**, utilizando dados reais do INMET (Instituto Nacional de Meteorologia). A solução visa identificar padrões meteorológicos que antecedem desastres naturais, oferecendo uma ferramenta tecnológica de apoio à prevenção, planejamento e resposta rápida.
+Diante desse cenário, este projeto propõe o desenvolvimento de um **modelo preditivo de tempestades no Brasil utilizando machine learning**, com o objetivo de fornecer alertas antecipados baseados em dados históricos reais do INMET (Instituto Nacional de Meteorologia). A escolha do tema é justificada pela urgência de soluções tecnológicas que auxiliem na prevenção de catástrofes naturais.
 
-Com base em dados históricos e análise de variáveis como precipitação, pressão atmosférica, radiação solar, umidade, temperatura e vento, o sistema propõe um modelo preditivo acessível via dashboard web, podendo futuramente integrar sensores físicos via ESP32 e mecanismos de alerta via AWS.
-
-Trata-se de uma iniciativa alinhada às demandas sociais e climáticas atuais, com potencial real de impacto na preservação de vidas e redução de danos materiais.
+A proposta se concretiza por meio de um sistema completo, que envolve o processamento de dados meteorológicos, integração com banco de dados Oracle, modelagem preditiva com Random Forest, e interface em Streamlit. Futuramente, o sistema poderá ser expandido para incluir sensores físicos via ESP32 e serviços de notificação por nuvem (AWS SES/SNS), tornando-o um instrumento acessível para apoio a decisões em tempo real.
 
 ---
 
-## 🧾 Etapas e Lógica da Solução
+## 📟 Etapas e Lógica da Solução
 
-- 📥 **Aquisição de Dados**: Download de séries temporais do INMET, cruzadas com eventos extremos reais (conforme “Imagem 1”).
-- 🧹 **Limpeza e Unificação**: Criação do notebook `DiegoVeiga_RM560658_Fase7_GlobalSolution.ipynb`, que consolidou e preparou a base `Base_Unificada_INMET`.
-- 🗄️ **Banco de Dados**: Estruturação da tabela `tempestade` com SQL (`CriaçãoTabela.sql`) e carregamento via script de inserção (`InserçãoDados.sql`).
-- 🌐 **Interface Web**: Desenvolvimento de uma aplicação com múltiplas páginas usando Streamlit.
-- 🤖 **Machine Learning**: Treinamento de modelo Random Forest, avaliação estatística e funcionalidade de previsão manual.
+* 📅 **Aquisição de Dados**: Coleta de séries temporais do INMET, correlacionadas com registros históricos de desastres documentados visualmente (Imagem 1).
+* 🧹 **Limpeza e Unificação**: Criação do notebook `DiegoVeiga_RM560658_Fase7_GlobalSolution.ipynb`, responsável por consolidar os dados em uma única base estruturada (`Base_Unificada_INMET`).
+* 📈 **Banco de Dados**: Modelagem e criação da tabela `tempestade` com `CriaçãoTabela.sql`, e inserção automatizada dos dados processados via `InserçãoDados.sql`.
+* 🌐 **Interface Web**: Implementação de uma aplicação interativa em Streamlit com navegação por páginas modulares.
+* 🤖 **Machine Learning**: Treinamento e avaliação de um modelo Random Forest com métricas confiáveis, além de interface para previsões manuais baseadas em parâmetros selecionáveis.
 
 ---
 
-## 🧩 Processamento e Estrutura de Dados
+## 🧹 Processamento e Estrutura de Dados
 
 ### 📌 `DiegoVeiga_RM560658_Fase7_GlobalSolution.ipynb`
-Este notebook Jupyter foi desenvolvido para automatizar a **unificação de múltiplas planilhas meteorológicas** provenientes do INMET em um único conjunto de dados coeso. Suas funcionalidades incluem:
 
-- Leitura e padronização de diferentes arquivos `.CSV` ou `.XLSX` por cidade e período.
-- Padronização de nomes de colunas e tratamento de inconsistências entre arquivos.
-- Conversão de formatos de data e hora para o padrão ISO.
-- Tratamento de dados nulos ou duplicados.
-- Adição de uma coluna de classificação binária (`desastre_natural`) para identificação de eventos críticos com base no cruzamento com o histórico de desastres climáticos (Imagem 1).
-- Exportação final para o arquivo `Base_Unificada_INMET.xlsx`, utilizado tanto para visualização quanto para inserção no banco de dados.
+Este notebook é responsável pela **automação do processo de unificação e saneamento de dados meteorológicos** do INMET. As escolhas metodológicas visam garantir a qualidade dos dados utilizados no modelo preditivo:
 
-Esse notebook é um passo essencial do pipeline de dados, pois **garante consistência, estrutura e integridade** para alimentar o sistema preditivo.
+* Leitura e integração de múltiplos arquivos `.CSV`/`.XLSX` por cidade e faixa temporal;
+* Padronização de colunas e conversão de tipos (data/hora para ISO);
+* Exclusão de duplicatas e tratamento de valores ausentes com critérios estatísticos;
+* Inclusão da coluna `desastre_natural` com base em cruzamentos com fontes históricas de desastres;
+* Exportação para o arquivo `Base_Unificada_INMET.xlsx`, base central de alimentação da aplicação.
+
+Essa estrutura reforça a consistência, confiabilidade e reprodutibilidade dos dados utilizados.
 
 ---
 
-### 🗄️ Arquivos SQL
+### 📈 Arquivos SQL
 
 #### 🧱 `CriaçãoTabela.sql`
-Este arquivo contém o script responsável por **estruturar a tabela `tempestade`** no banco de dados Oracle da FIAP. A estrutura contempla todas as variáveis meteorológicas necessárias ao modelo, incluindo:
 
-- Dados climáticos (precipitação, pressão, temperatura, umidade, radiação, vento)
-- Identificação temporal (data, hora UTC)
-- Campo categórico da cidade
-- Coluna `desastre_natural` como variável alvo para previsão
+O script define a estrutura da tabela `tempestade` no banco Oracle, projetada para armazenar todas as variáveis necessárias à análise preditiva:
 
-A tabela é criada com **chave primária automática (ID)** e tipos compatíveis com o Oracle (`VARCHAR2`, `FLOAT`, `DATE`, etc.):contentReference[oaicite:0]{index=0}.
+* Campos meteorológicos (precipitação, pressão, radiação, temperatura, umidade, vento);
+* Identificação temporal (data, hora UTC);
+* Localização (cidade);
+* Variável alvo (`desastre_natural`) para aprendizado supervisionado.
 
-#### 📤 `InserçãoDados.sql`
-Complementa o processo ao conter os **comandos `INSERT INTO` necessários para popular a tabela `tempestade`** com os dados do arquivo unificado (`Base_Unificada_INMET.xlsx`). Este arquivo pode ser gerado automaticamente pelo notebook, ou montado com base em scripts auxiliares.
+A escolha dos tipos (`VARCHAR2`, `FLOAT`, `DATE`) garante compatibilidade e desempenho no banco de dados FIAP.
+
+#### 📄 `InserçãoDados.sql`
+
+Script auxiliar que realiza a **inserção automatizada dos registros** processados. Pode ser gerado via notebook ou scripts adicionais. Sua função é garantir que os dados estejam prontos para consulta e uso em análises e visualizações na aplicação.
+
+Esses dois arquivos representam a base de persistência e disponibilização dos dados, integrando a camada de dados ao restante da aplicação.
 
 ---
-
-Esses dois arquivos compõem a camada de persistência da solução, possibilitando a consulta e a manipulação eficiente dos dados via SQL, bem como a integração direta com a interface de visualização e modelagem preditiva.
-
 
 ## 📊 Funcionalidades do Sistema
 
-### 🧭 `Apresentação.py`
-- Página inicial do sistema.
-- Introduz o propósito da aplicação e os objetivos do projeto.
-- Estabelece o contexto de monitoramento de tempestades com base em dados reais.
-- Interface inicial amigável com descrição clara da proposta.
+### 🧝 `Apresentação.py`
 
-### 🗃️ `Banco_de_Dados.py`
-- Responsável por conectar o sistema ao banco de dados Oracle (servidor FIAP).
-- Realiza a consulta completa da tabela `tempestade`.
-- Converte os dados para DataFrame Pandas, organizando colunas com nomes compreensíveis.
-- Função central para carregar os dados brutos em todas as páginas.
+* Página de boas-vindas e descrição geral do sistema;
+* Explica o propósito do projeto e o contexto dos desastres analisados.
+
+### 📃 `Banco_de_Dados.py`
+
+* Gerencia a conexão com o banco Oracle;
+* Realiza consulta SQL e converte os dados em DataFrame para uso em todas as páginas.
 
 ### 📈 `1_Visão_Geral.py`
-- Apresenta uma análise inicial da base de dados.
-- Mostra as dimensões do DataFrame, tipos de dados e presença de valores ausentes.
-- Gera estatísticas descritivas para todas as variáveis numéricas.
-- Permite entender a estrutura e qualidade dos dados antes das análises aprofundadas.
+
+* Exibe informações básicas do dataset: dimensões, tipos, valores nulos;
+* Gera estatísticas descritivas de forma automatizada.
 
 ### 📊 `2_Análise_Unitária.py`
-- Executa uma análise univariada para todas as variáveis numéricas e categóricas.
-- Gera histogramas e gráficos interativos com Plotly para cada variável.
-- Permite ao usuário observar a distribuição de cada atributo meteorológico.
+
+* Visualiza a distribuição individual das variáveis climáticas e categóricas;
+* Usa gráficos interativos (Plotly) para melhor compreensão dos dados.
 
 ### 🔗 `3_Análise_Correlação.py`
-- Gera um mapa de calor de correlação entre as variáveis numéricas.
-- Ajuda a identificar padrões e relações entre variáveis como precipitação, pressão, temperatura e umidade.
-- Usa seaborn e matplotlib para visualização estatística.
+
+* Apresenta um mapa de calor com a correlação entre as variáveis numéricas;
+* Suporte visual para entender as inter-relações entre os fatores climáticos.
 
 ### 🤖 `4_Modelo_Preditivo.py`
-- Coração da aplicação: modelo preditivo baseado em Random Forest.
-- Oferece filtros interativos (sliders e multiselect) para seleção de cidades e faixas de variáveis.
-- Trata outliers e dados ausentes antes do treinamento.
-- Treina o modelo com validação cruzada e apresenta métricas de avaliação (R², MAE, RMSE, MAPE).
-- Permite que o usuário insira dados manuais para realizar previsões personalizadas.
-- Exibe se há risco de desastre natural com base nos dados inseridos.
+
+* Interface central do modelo de machine learning;
+* Permite filtragem por cidade e faixa de variáveis;
+* Realiza pré-processamento e treinamento com Random Forest;
+* Apresenta métricas (R², MAE, RMSE, MAPE) e realiza previsões customizadas.
+
 ---
 
 ## 📊 Avaliação do Modelo
 
-O modelo foi testado com amostras de dados reais das regiões afetadas e demonstrou boa acurácia e capacidade de generalização, com destaque para os seguintes pontos:
+O modelo Random Forest demonstrou desempenho consistente ao ser testado com registros reais de diferentes regiões. Os principais destaques incluem:
 
-- **Acurácia (R²)** consistente acima de 80% nas cidades com maior histórico de tempestades.
-- Capacidade de identificar padrões climáticos críticos com base em múltiplas variáveis meteorológicas.
-- Interface amigável com possibilidade de personalização de entrada e teste do modelo treinado.
+* **Acurácia (R²)** superior a 80% nas localidades com maior número de registros;
+* Capacidade de identificar padrões relevantes entre variáveis meteorológicas e ocorrência de desastres;
+* Interface de previsão robusta e personalizável.
+
+A escolha do Random Forest foi motivada pela sua robustez a outliers, baixo risco de overfitting e excelente desempenho com dados tabulares heterogêneos.
 
 ---
 
-## 📥 Dados Utilizados
+## 📅 Dados Utilizados
 
-- Dados meteorológicos brutos do portal INMET
-- Eventos extremos documentados pelo site disasterscharter.org
-- Tabela `tempestade` com mais de 20 colunas climáticas padronizadas
-- Arquivo consolidado: `Base_Unificada_INMET.xlsx`
+* Dados climáticos do INMET (históricos regionais);
+* Registros de desastres naturais do site disasterscharter.org;
+* Estrutura padronizada com 20+ colunas meteorológicas;
+* Base consolidada: `Base_Unificada_INMET.xlsx`.
 
 ---
 
 ## 🔗 Requisitos Atendidos
 
-- ✅ Modelo de Machine Learning funcional e treinado
-- ✅ Integração com banco de dados Oracle
-- ✅ Aplicativo web interativo com múltiplas páginas
-- ✅ Scripts SQL para criação e inserção de dados
-- ✅ Interface de previsão com entrada manual
-- ✅ Estrutura modular clara e reutilizável
+* ✅ Modelo de machine learning implementado e funcional;
+* ✅ Base relacional em Oracle estruturada e populada com SQL;
+* ✅ Aplicação web com múltiplas visualizações em Streamlit;
+* ✅ Scripts e modularização completos para reuso e expansão futura.
 
 ---
 
-## 📺 Demonstração
+## 📹 Demonstração
 
-> Link do vídeo: [https://youtube.com/SEU_LINK_AQUI]  
-
----
+> Link do vídeo: \[[https://youtube.com/SEU\_LINK\_AQUI](https://youtube.com/SEU_LINK_AQUI)]
+> Frase obrigatória: **"QUERO CONCORRER"**
