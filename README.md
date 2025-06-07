@@ -43,8 +43,6 @@ Este notebook é responsável pela **automação do processo de unificação e s
 
 Essa estrutura reforça a consistência, confiabilidade e reprodutibilidade dos dados utilizados.
 
----
-
 ### 📈 Arquivos SQL
 
 #### 🧱 `CriaçãoTabela.sql`
